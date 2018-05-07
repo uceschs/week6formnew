@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Scrolling Nav - Start Bootstrap Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/scrolling-nav.css" rel="stylesheet">
+
+      <!-- the following links add the CSS and Javascript required for the Leaflet Map -->
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css"
+      integrity="sha512-wcw6ts8Anuw10Mzh9Ytw4pylW8+NAD4ch3lqm9lzAsTxg0GFeJgoAtxuCLREZSC5lUXdVyo/7yfsqFjQ4S+aKw=="crossorigin=""/>
+      <script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js"
+      integrity="sha512-mNqn2Wg7tSToJhvHcqfzLMU6J4mkOImSPTxVZAdo+lcPlk+GhZmYgACEe0x35K7YzW1zJ7XyJV/TT1MrdXvMcA=="crossorigin=""></script>
+      <!-- the following CSS is used to set the size of the Map -->
+      <style type="text/css"> #mapid { height: 500px; width: 700px; }</style>
+      <!-- the following links incorporate the CSS required for custom icon creation -->
+
+
+
+  </head>
+
+  <body id="page-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">Start Bootstrap</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#question1">Questions</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="bg-primary text-white">
+      <div class="container text-center">
+        <h1>Welcome to the Question App</h1>
+        <p class="lead">Please fill up the question below and click upload.</p>
+      </div>
+    </header>
+
+
+
+    <section id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>About this page</h2>
+            <p class="lead">This is a great place to talk about your webpage. This template is purposefully unstyled so you can use it as a boilerplate or starting point for you own landing page designs! This template features:</p>
+            <ul>
+              <li>Clickable nav links that smooth scroll to page sections</li>
+              <li>Responsive behavior when clicking nav links perfect for a one page website</li>
+              <li>Bootstrap's scrollspy feature which highlights which section of the page you're on in the navbar</li>
+              <li>Minimal custom CSS so you are free to explore your own unique design options</li>
+            </ul>
+
+      <!-- Map!! -->
+      <div class="container vertical-center"id="mapid" style="width: 100%; height: 600px;"></div>
+      <!-- the following script will load the map and set the default view and zoom, as well as loading the basemap tiles -->
+      <script>
+
+      // load the map
+      var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+      // load the tiles
+      L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {maxZoom: 18,attribution: 'Map data &copy; <ahref="http://openstreetmap.org">OpenStreetMap</a> contributors, ' + '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,' +'Imagery © <a href="http://mapbox.com">Mapbox</a>', id: 'mapbox.streets'}).addTo(mymap);
+      // add a point
+      L.marker([51.5, -0.09]).addTo(mymap).bindPopup("<b>Hello world!</b><br/>I am a popup.").openPopup();
+      // add a circle
+      L.circle([51.508, -0.11], 500, {color: 'red',fillColor: '#f03',fillOpacity: 0.5}).addTo(mymap).bindPopup("I am a circle.");
+      // add a polygon with 3 end points (i.e. a triangle)
+      var myPolygon = L.polygon([[51.509, -0.08],[51.503, -0.06],[51.51, -0.047]],{color: 'red',fillColor: '#f03',fillOpacity: 0.5}).addTo(mymap).bindPopup("I am a polygon.");
+
+      var popup = L.popup();
+      function onMapClick(e) {
+        popup
+        .setLatLng(e.latlng)
+        .setContent("You clicked the map at " + e.latlng.toString())
+        .openOn(mymap);
+        document.getElementById('latitude').value = e.latlng.lat;
+        document.getElementById('longitude').value = e.latlng.lng;
+      }
+        mymap.on('click', onMapClick);
+      </script>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="question1" class="bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2 style = "text-align: center">Please fill in your question here!</h2>
+            <br />
+            <br />
+            <h4 class="text-secondary mb-0">Step 1 : Find out the coordinates of your question by click on the map above.</h4>
+            <br />
+            <br />
+            <h4 class="text-secondary mb-0">Step 2 : Input the coordinates in below manually.</h4>
+            <br />
+            <br />
+            <div id="dataUploadResult"><p class="text-secondary mb-0">The result of the upload goes here</p></div>
+            <br />
+            <br />
+            <label for="latitude">Latitude</label><input type="text" size="25" id="latitude"/><br />
+            <br />
+            <label for="longitude">Longitude</label><input type="text" size="25" id="longitude"/><br />
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+      <section id="step2">
+      <div class="container text-center">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h4 class="text-secondary mb-0">Step 3 : Please fill in your question content in the box below.</h4>
+                        <br />
+            <input type="text" style="height: 200px; width: 100%"  id="question"/><br />
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+      <section id="step3" class="bg-light text-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h4 class="text-secondary mb-0">Step 4 : Choose a right answer for this question then click upload!</h4>
+              <br />
+              <p3 class="text-secondary mb-0">Tick the one with the correct answer.</p3>
+              <br />
+              <br />
+              <input type="text" style="height: 50px; width: 60%"  id="answer1"/><input type="radio" name="answer_1" id = "check1_true"/><br />
+              <br />
+              <input type="text" style="height: 50px; width: 60%"  id="answer2"/><input type="radio" name="answer_2" id = "check2_true"/><br />
+              <br />
+              <input type="text" style="height: 50px; width: 60%"  id="answer3"/><input type="radio" name="answer_3" id = "check3_true"/><br />
+              <br />
+              <input type="text" style="height: 50px; width: 60%"  id="answer4"/><input type="radio" name="answer_4" id = "check4_true"/><br />
+              <br />
+              <p>Click here to upload the data</p>
+              <br />
+              <a class="btn btn-dark btn-xl js-scroll-trigger" href="" onclick="startDataUpload()">Start Data Upload</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>Contact us</h2>
+            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero odio fugiat voluptatem dolor, provident officiis, id iusto! Obcaecati incidunt, qui nihil beatae magnam et repudiandae ipsa exercitationem, in, quo totam.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2017</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom JavaScript for this theme -->
+    <script src="js/scrolling-nav.js"></script>
+    <script src="js/uploadData.js"></script>>
+  </body>
+
+</html>
