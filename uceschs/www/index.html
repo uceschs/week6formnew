@@ -1,0 +1,336 @@
+<!-- This template is provided by Bootstrap -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>The Qiz App</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/scrolling-nav.css" rel="stylesheet">
+
+      <!-- the following links add the CSS and Javascript required for the Leaflet Map -->
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css"
+      integrity="sha512-wcw6ts8Anuw10Mzh9Ytw4pylW8+NAD4ch3lqm9lzAsTxg0GFeJgoAtxuCLREZSC5lUXdVyo/7yfsqFjQ4S+aKw=="crossorigin=""/>
+      <script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js"
+      integrity="sha512-mNqn2Wg7tSToJhvHcqfzLMU6J4mkOImSPTxVZAdo+lcPlk+GhZmYgACEe0x35K7YzW1zJ7XyJV/TT1MrdXvMcA=="crossorigin=""></script>
+      <!-- the following CSS is used to set the size of the Map -->
+      <style type="text/css"> #mapid { height: 500px; width: 320px; }</style>
+      <!-- the following links incorporate the CSS required for custom icon creation -->
+
+  </head>
+
+
+  <body id="page-top">
+
+    <!-- Navigation features for go to sections-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">The Question App</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+         </button>
+         <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#step1">Find locations</a>
+            </li>
+              <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#step2">Fill in questions</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#step3">Answers for the question</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#contact">Help</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+    <!-- The header-->
+    <header class="bg-primary text-white">
+      <div class="container text-center">
+        <h1>Welcome to the Question App</h1>
+        <p class="lead">Please fill up the question below and upload, your questions will become the question for the qiz app.</p>
+      </div>
+    </header>
+
+
+    <!-- A section for brief app introduction-->
+    <section id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>About the question app</h2>
+            <p class="lead">This is a place for you to update your questions.</p>
+            <ul>
+              <li>Click on the map, it will show you where is your location.</li>
+              <li>You will be able to fill in the question for that specific location.</li>
+              <li>You will have to fill in the answers for your questions and choose one right answer for it.</li>
+              <li>Once you've done, click submit! Easy!</li>
+            </ul>
+
+
+
+      <!-- Map Section -->
+          <!-- A container hold for the map-->
+          <div class="container vertical-center"id="mapid" style="width: 320px; height: 500px;"></div>
+          <!-- the following script will load the map and set the default view and zoom, as well as loading the basemap tiles -->
+      
+      <!-- Main part for the map definition and functions-->
+      <script>
+      // load the map
+      var mymap = L.map('mapid');
+      // load the tiles
+      L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {maxZoom: 18,attribution: 'Map data &copy; <ahref="http://openstreetmap.org">OpenStreetMap</a> contributors, ' + '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,' +'Imagery © <a href="http://mapbox.com">Mapbox</a>', id: 'mapbox.streets'}).addTo(mymap);
+
+        // a function that can get the radius from after locate the user's location
+        function onLocationFound(e) {
+        var radius = 100;
+        L.marker(e.latlng).addTo(mymap).bindPopup("It's 100 meters radius around you.").openPopup();
+        L.circle(e.latlng, radius).addTo(mymap);}
+
+        //an alert in case can't locate
+        function onLocationError(e) {
+          alert(e.message);
+        }
+
+        // get the function of radius and alert
+        mymap.on('locationfound', onLocationFound);
+        mymap.on('locationerror', onLocationError);
+        // locate the user's location
+        mymap.locate({setView: true, maxZoom: 25, watch: true});
+
+      // add a point
+      L.marker([51.524593, -0.133842]).addTo(mymap).bindPopup("<h6>UCL</h6>Main Library").openPopup();
+      L.marker([51.525525, -0.134986]).addTo(mymap).bindPopup("<h6>Underground</h6>Euston Squre Station").openPopup();
+      L.marker([51.525120, -0.136505]).addTo(mymap).bindPopup("<h6>UCL</h6>Hospital").openPopup();
+      L.marker([51.524075, -0.135057]).addTo(mymap).bindPopup("<h6>UCL</h6>Cruciform Building").openPopup();
+      L.marker([51.523312, -0.134895]).addTo(mymap).bindPopup("<h6>UCL</h6>Cancer Institute").openPopup();
+      L.marker([51.524577, -0.138145]).addTo(mymap).bindPopup("<h6>Underground</h6>Warren Street Station").openPopup();
+      L.marker([51.523362, -0.137196]).addTo(mymap).bindPopup("<h6>H Mart Mini</h6>A korean supermarket").openPopup();
+      L.marker([51.524295, -0.134542]).addTo(mymap).bindPopup("<h6>UCL</h6>Main Entrance").openPopup();
+      L.marker([51.522876, -0.132085]).addTo(mymap).bindPopup("<h6>UCL</h6>Electrical Engineering Building").openPopup();
+
+      var popup = L.popup();
+      function onMapClick(e) {
+        popup
+        .setLatLng(e.latlng)
+        .setContent("You clicked the map at " + "</br>" + e.latlng.toString())
+        .openOn(mymap);
+        document.getElementById('latitude').value = e.latlng.lat;
+        document.getElementById('longitude').value = e.latlng.lng;
+      }
+        mymap.on('click', onMapClick);
+      </script>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- A section for containing the coodinates features-->
+    <section id="step1" class="bg-light text-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2 >Please fill in your question here!</h2>
+            <br />
+            <br />
+            <h4 class="text-secondary mb-0">Step 1 : Find out the coordinates of your question by click on the map above.</h4>
+            <br />
+            <br />
+            <label for="latitude">Latitude</label><input type="text" size="25" id="latitude" style = 'border: 1px solid black; margin-left: 10px;'/><br />
+            <br />
+            <label for="longitude">Longitude</label><input type="text" size="25" id="longitude" style = 'border: 1px solid black; margin-left: 10px;'/><br />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- A section for containing the question content features-->
+      <section id="step2">
+      <div class="container text-center">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h4 class="text-secondary mb-0">Step 2 : Please fill in your question content in the box below.</h4>
+                        <br />
+            <input type="text" style="height: 200px; width: 320px;  border: 1px solid black"  id="question"/><br />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- A section for containing the answers content features-->
+      <section id="step3" class="bg-light text-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h4 class="text-secondary mb-0">Step 3 : Put four answers for your question then choose a right answer for it then click upload!</h4>
+              <br />
+              <p3 class="text-secondary mb-0">Tick the one with the correct answer.</p3>
+              <br />
+              <br />
+              <input type="text" style="height: 50px; width: 60%;  border: 1px solid black"  id="answer1"/><input type="radio" name="answer" id = "check1_true" style = "margin-left: 10px;"/><br />
+              <br />
+              <input type="text" style="height: 50px; width: 60%;  border: 1px solid black"  id="answer2"/><input type="radio" name="answer" id = "check2_true" style = "margin-left: 10px;"/><br />
+              <br />
+              <input type="text" style="height: 50px; width: 60%;  border: 1px solid black"  id="answer3"/><input type="radio" name="answer" id = "check3_true" style = "margin-left: 10px;"/><br />
+              <br />
+              <input type="text" style="height: 50px; width: 60%;  border: 1px solid black"  id="answer4"/><input type="radio" name="answer" id = "check4_true" style = "margin-left: 10px;"/><br />
+              <br />
+              <p>Click here to upload the data</p>
+              <br />
+              <a class="btn btn-dark btn-xl js-scroll-trigger" href="" onclick="startDataUpload()">Start Question Upload</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- A section for containing get help features-->
+    <section id="contact">
+    <!-- Page Content -->
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h1 class="mt-5">USER GUIDE</h1>
+          <p class="lead">Functions for this app</p>
+          <ul class="list-unstyled">
+            </br>
+            <li>You will find a navigator on top of the app, it will guide you to each section that you want!</li>
+          </br>
+            <img src="img/question1.png" alt="Question 1" style="width: 60%; height: 60%"/>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+        <!-- Page Content -->
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <ul class="list-unstyled">
+            </br>
+            </br>
+            <li>You will find a navigator on top of the app, it will guide you to each section that you want!</li>
+            </br>
+            <img src="img/question2.png" alt="Question 2" style="width: 60%; height: 60%"/>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+            <!-- Page Content -->
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <ul class="list-unstyled">
+           </br>
+           </br>
+            <li>The map will automatically show you where you are and the area that's 100 meters radius from you.</li>
+            </br>
+            <img src="img/question4.png" alt="Question 4" style="width: 60%; height: 60%"/>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+                <!-- Page Content -->
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <ul class="list-unstyled">
+            </br>
+            </br>
+            <li>You can click on the map to get any location coordinates on the map.</li>
+            </br>
+            <img src="img/question5.png" alt="Question 5" style="width: 60%; height: 60%"/>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+                <!-- Page Content -->
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <ul class="list-unstyled">
+            </br>
+            </br>
+            <li>Your location coordinates will automatically stored in the box.</li>
+            </br>
+            <img src="img/question6.png" alt="Question 6" style="width: 60%; height: 60%"/>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+                    <!-- Page Content -->
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <ul class="list-unstyled">
+            </br>
+            </br>
+            <li>In this part, you will have to make one question according to the coordinates you just clicked.</li>
+            </br>
+            <img src="img/question7.png" alt="Question 7" style="width: 60%; height: 60%"/>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+                    <!-- Page Content -->
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <ul class="list-unstyled">
+            </br>
+            </br>
+            <li>Then you will have to give four answers for this question by insert in the box below and tick the correct answer. Then you will have to click on "Start Questio Upload" to submit all the things you just filled in.</li>
+            </br>
+            <img src="img/question8.png" alt="Question 8" style="width: 60%; height: 60%"/>
+          </ul>
+        </div>
+      </div>
+    </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2017</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom JavaScript for this theme -->
+    <script src="js/scrolling-nav.js"></script>
+    <script src="js/uploadData.js"></script>
+  </body>
+
+</html>
