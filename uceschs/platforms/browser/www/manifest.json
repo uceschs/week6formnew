@@ -1,11 +1,11 @@
 {
   "background_color": "#FFF",
   "display": "standalone",
-  "name": "helloworld",
-  "short_name": "helloworld",
+  "name": "The Question App",
+  "short_name": "The Question App",
   "version": "FormApp",
-  "description": "Hello World sample application that responds to the deviceready event.",
-  "author": "PhoneGap Team",
+  "description": "The Question App allows you to track a location on a map and obtain the coordinate for the qestion you want to give it to user.",
+  "author": "Chiao Ju, Hsueh",
   "icons": [],
   "start_url": "index.html"
 }

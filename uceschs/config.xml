@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="FormApp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>helloworld</name>
+    <name>The Question App</name>
     <description>
-        Hello World sample application that responds to the deviceready event.
+        The Question App allows you to track a location on a map and obtain the coordinate for the qestion you want to give it to user.
     </description>
-    <author email="support@phonegap.com" href="http://phonegap.com">
-        PhoneGap Team
+    <author email="uceschs@ucl.ac.uk" href="https://github.com/uceschs">
+        Chiao Ju, Hsueh
     </author>
     <content src="index.html" />
     <preference name="DisallowOverscroll" value="true" />
